@@ -1,20 +1,20 @@
 # httpcodes
 
-I was bored to google random HTTP status codes, so I wrote this little Go helper to show me the info directly in my CLI.
+A lightweight CLI tool for quick HTTP status code lookups. No more context switching to web browsers or documentation sites.
 
 ## What it does
 
-Tired of context switching to look up HTTP status codes? This tiny tool gives you instant status code lookups right in your terminal with purple output. Just run `httpcodes <code>`.
+This little tool provides HTTP status code lookups in a purple output. Simply run `httpcodes <code>` to get detailed information about any HTTP status code, including standard codes and extended ones from services like Cloudflare and nginx.
 
-## Get it running
+## Installation
 
-### The lazy way (recommended)
+### Quick install
 
 ```bash
 go install github.com/joluc/httpcodes@latest
 ```
 
-### Or build it yourself
+### Build from source
 
 ```bash
 git clone https://github.com/joluc/httpcodes.git
@@ -22,7 +22,7 @@ cd httpcodes
 make install
 ```
 
-## How to use it
+## Usage
 
 ```bash
 httpcodes <status_code>
@@ -46,16 +46,16 @@ httpcodes 418
 ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-### Need help?
+### Help
 
-Just run `httpcodes` without any arguments and it'll show you what to do.
+Run `httpcodes` without arguments to see usage information and examples.
 
-## Licence
+## License
 
-This project is licensed under the MIT License (do whatever you want with it).
+This project is licensed under the MIT License.
 
-## Props
+## Credits
 
-- Initial HTTP status codes data comes from the awesome [MattIPv4/status-codes](https://github.com/MattIPv4/status-codes) repo (GPL-3.0 License)
-- Added some missing codes (305, 308, 425, 430, 599)
-- Built with [lipgloss](https://github.com/charmbracelet/lipgloss) for those sweet purple tables
+- Initial HTTP status codes data from [MattIPv4/status-codes](https://github.com/MattIPv4/status-codes) (GPL-3.0 License)
+- Added some standard codes (305, 308, 425, 430, 599) for completeness
+- Built with [lipgloss](https://github.com/charmbracelet/lipgloss) for beautiful terminal styling
