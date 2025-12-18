@@ -3,6 +3,7 @@ package main
 import (
 	_ "embed"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"os"
 
@@ -11,6 +12,8 @@ import (
 
 //go:embed codes.json
 var codesJSON []byte
+
+const version = "0.1.0"
 
 // StatusCode represents HTTP status code data from https://github.com/MattIPv4/status-codes
 type StatusCode struct {
@@ -53,7 +56,17 @@ var (
 )
 
 func main() {
-	if len(os.Args) != 2 {
+	versionFlag := flag.Bool("version", false, "Show version information")
+	flag.BoolVar(versionFlag, "v", false, "Show version information (shorthand)")
+	flag.Usage = showUsage
+	flag.Parse()
+
+	if *versionFlag {
+		showVersion()
+		os.Exit(0)
+	}
+
+	if flag.NArg() != 1 {
 		showUsage()
 		os.Exit(1)
 	}
@@ -64,7 +77,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	code := os.Args[1]
+	code := flag.Arg(0)
 	if statusCode, found := codes[code]; found {
 		displayStatusCode(statusCode)
 	} else {
@@ -77,11 +90,18 @@ func showUsage() {
 	title := codeStyle.Render("HTTP Status Code Lookup")
 
 	fmt.Printf("\n%s\n", title)
-	fmt.Printf("\nUsage: httpcodes <status_code>\n")
+	fmt.Printf("\nUsage: httpcodes [flags] <status_code>\n")
+	fmt.Printf("\nFlags:\n")
+	fmt.Println("  -v, --version    Show version information")
+	fmt.Println("  -h, --help       Show this help message")
 	fmt.Printf("\nExamples:\n")
 	fmt.Println("  httpcodes 200")
 	fmt.Println("  httpcodes 404")
 	fmt.Println("  httpcodes 500")
+}
+
+func showVersion() {
+	fmt.Printf("httpcodes version %s\n", version)
 }
 
 func loadCodes() (map[string]StatusCode, error) {
